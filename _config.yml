@@ -1,7 +1,18 @@
-title: Jeonguk Choi
+title: "Jeonguk Choi's Weblog"
 description: Software Engineer
 
 url: "https://cjeong.uk"
 baseurl: ""
 
 theme: minima
+
+author: Jeonguk Choi
+# email: 
+
+github_username: cjeonguk
+rss: rss
+
+external_links:
+  - title: GitHub
+    url: https://github.com/cjeonguk
+    new_tab: true
