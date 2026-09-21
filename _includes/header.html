@@ -25,13 +25,7 @@
           {%- endfor -%}
 
           {%- for link in site.external_links -%}
-            <a
-              class="page-link"
-              href="{{ link.url | escape }}"
-              {%- if link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif -%}
-            >
-              {{ link.title | escape }}
-            </a>
+            <a class="page-link" href="{{ link.url | escape }}" {%- if link.new_tab %} target="_blank" rel="noopener noreferrer"{% endif -%}>{{ link.title | escape }}</a>
           {%- endfor -%}
         </div>
       </nav>
