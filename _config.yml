@@ -13,6 +13,8 @@ github_username: cjeonguk
 rss: rss
 
 external_links:
+  - title: Tools
+    url: https://tools.cjeong.uk
   - title: GitHub
     url: https://github.com/cjeonguk
     new_tab: true
