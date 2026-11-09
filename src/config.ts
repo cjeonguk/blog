@@ -14,7 +14,7 @@ export const SITE: {
   author: {
     name: "Jeonguk Choi",
     // Shown in the footer once set.
-    email: undefined,
+    email: "contact@cjeong.uk",
   },
   social: {
     github: "cjeonguk",
