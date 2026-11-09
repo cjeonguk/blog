@@ -1,0 +1,44 @@
+// Light values are minima 2.5.1's colors with lighten()/darken() precomputed.
+// Dark values apply automatically from the OS setting.
+
+:root {
+  color-scheme: light dark;
+
+  --text-color:       #111;
+  --background-color: #fdfdfd;
+  --brand-color:      #2a7ae2;
+  --brand-color-visited: #1756a9;
+
+  --grey-color:       #828282;
+  --grey-color-light: #e8e8e8;
+  --grey-color-dark:  #424242;
+
+  --code-background:  #eef;
+
+  --table-text-color:      #3f3f3f;
+  --table-zebra-color:     #f7f7f7;
+  --table-header-bg:       #f0f0f0;
+  --table-header-border:   #dedede;
+  --table-header-border-bottom: #c9c9c9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color:       #e0e0e0;
+    --background-color: #181818;
+    --brand-color:      #79b8ff;
+    --brand-color-visited: #a5c8f5;
+
+    --grey-color:       #9a9a9a;
+    --grey-color-light: #333;
+    --grey-color-dark:  #c6c6c6;
+
+    --code-background:  #22222c;
+
+    --table-text-color:      #d0d0d0;
+    --table-zebra-color:     #1f1f1f;
+    --table-header-bg:       #262626;
+    --table-header-border:   #3a3a3a;
+    --table-header-border-bottom: #4a4a4a;
+  }
+}
