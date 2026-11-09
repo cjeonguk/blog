@@ -20,11 +20,68 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <pagefind-config excerpt-length="24"></pagefind-config>
       <pagefind-input placeholder="Search posts" autofocus></pagefind-input>
       <pagefind-summary></pagefind-summary>
-      <pagefind-results></pagefind-results>
+      <ul class="post-list search-results" aria-label="Search results"></ul>
     </div>
     <noscript><p>Search needs JavaScript.</p></noscript>
   </article>
 </BaseLayout>
+
+<script is:inline type="module">
+  // Pagefind's input and summary components drive the search. Results are
+  // drawn here with the same markup as the home page post list.
+  await customElements.whenDefined("pagefind-input");
+  const instance = window.PagefindComponents.getInstanceManager().getInstance("default");
+  const list = document.querySelector(".search-results");
+
+  const formatDate = (iso) =>
+    new Date(iso).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      timeZone: "UTC",
+    });
+
+  const el = (tag, attrs = {}, children = []) => {
+    const node = document.createElement(tag);
+    for (const [key, value] of Object.entries(attrs)) {
+      if (key === "html") node.innerHTML = value;
+      else if (key === "text") node.textContent = value;
+      else node.setAttribute(key, value);
+    }
+    node.append(...children);
+    return node;
+  };
+
+  const renderResult = (data) => {
+    const subResults = instance.getDisplaySubResults(data, 3);
+    return el("li", {}, [
+      data.meta.date ? el("span", { class: "post-meta", text: formatDate(data.meta.date) }) : "",
+      el("h3", {}, [el("a", { class: "post-link", href: data.url, text: data.meta.title })]),
+      el("p", { html: data.excerpt }),
+      subResults.length
+        ? el(
+            "ul",
+            { class: "search-sub-results" },
+            subResults.map((sub) =>
+              el("li", {}, [
+                el("a", { href: sub.url, text: sub.title }),
+                el("p", { class: "post-meta", html: sub.excerpt }),
+              ]),
+            ),
+          )
+        : "",
+    ]);
+  };
+
+  // Ignore results from an older query that finish loading late.
+  let latest = 0;
+  instance.on("results", async (searchResult) => {
+    const run = ++latest;
+    const items = await Promise.all(searchResult.results.map((r) => r.data()));
+    if (run !== latest) return;
+    list.replaceChildren(...items.map(renderResult));
+  });
+</script>
 
 <style is:global>
   .search {
@@ -35,18 +92,37 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     --pf-background: var(--background-color);
     --pf-border: var(--grey-color-light);
     --pf-border-focus: var(--grey-color);
-    --pf-hover: var(--code-background);
-    --pf-skeleton: var(--grey-color-light);
-    --pf-skeleton-shine: var(--background-color);
-    --pf-mark: var(--text-color);
     --pf-outline-focus: var(--brand-color);
     --pf-border-radius: 3px;
     --pf-summary-font-size: 14px;
-    --pf-result-title-font-size: 18px;
-    --pf-result-excerpt-font-size: 15px;
 
     display: flex;
     flex-direction: column;
     gap: 15px;
+  }
+
+  .search-results {
+    margin-top: 15px;
+  }
+
+  .search-results mark {
+    background-color: transparent;
+    color: var(--heading-color);
+    font-weight: 600;
+  }
+
+  .search-sub-results {
+    list-style: none;
+    margin: 0 0 0 2px;
+    padding-left: 15px;
+    border-left: 2px solid var(--grey-color-light);
+  }
+
+  .search-sub-results > li + li {
+    margin-top: 10px;
+  }
+
+  .search-sub-results p {
+    margin-bottom: 0;
   }
 </style>
