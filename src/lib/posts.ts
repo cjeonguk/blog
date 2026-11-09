@@ -9,6 +9,16 @@ export async function getPosts() {
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
 
+// Preview for the post list, like Jekyll's excerpt: the first paragraph
+// with text in it. Images are dropped. Returns HTML.
+export function getExcerpt(html: string | undefined) {
+  for (const [, inner] of (html ?? "").matchAll(/<p>([\s\S]*?)<\/p>/g)) {
+    const text = inner.replace(/<img[^>]*>/g, "").trim();
+    if (text.replace(/<[^>]+>/g, "").trim()) return `<p>${text}</p>`;
+  }
+  return "";
+}
+
 // Same output as minima's "%b %-d, %Y", e.g. "Sep 21, 2026".
 export function formatDate(date: Date) {
   return date.toLocaleDateString("en-US", {

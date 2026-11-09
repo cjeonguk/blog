@@ -94,6 +94,7 @@ li {
  * Headings
  */
 h1, h2, h3, h4, h5, h6 {
+  color: var(--heading-color);
   font-weight: $base-font-weight;
 }
 
@@ -111,7 +112,7 @@ a {
   }
 
   &:hover {
-    color: var(--text-color);
+    color: var(--link-hover-color);
     text-decoration: underline;
   }
 
@@ -225,7 +226,7 @@ table {
   text-align: $table-text-align;
   color: var(--table-text-color);
   border-collapse: collapse;
-  border: 1px solid var(--grey-color-light);
+  border: 1px solid var(--table-border-color);
   tr {
     &:nth-child(even) {
       background-color: var(--table-zebra-color);
@@ -240,6 +241,6 @@ table {
     border-bottom-color: var(--table-header-border-bottom);
   }
   td {
-    border: 1px solid var(--grey-color-light);
+    border: 1px solid var(--table-border-color);
   }
 }

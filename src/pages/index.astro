@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getPosts, formatDate } from "../lib/posts";
+import { getPosts, getExcerpt, formatDate } from "../lib/posts";
 
 const posts = await getPosts();
 ---
@@ -9,28 +9,26 @@ const posts = await getPosts();
   <div class="home">
     {
       posts.length > 0 && (
-        <>
-          <h2 class="post-list-heading">Posts</h2>
-          <ul class="post-list">
-            {posts.map((post) => (
-              <li>
-                <span class="post-meta">
-                  {formatDate(post.data.date)}
-                  {post.data.draft && <span class="draft-badge"> • Draft</span>}
-                </span>
-                <h3>
-                  <a class="post-link" href={`/posts/${post.id}/`}>
-                    {post.data.title}
-                  </a>
-                </h3>
-              </li>
-            ))}
-          </ul>
-
-          <p class="rss-subscribe">
-            subscribe <a href="/rss.xml">via RSS</a>
-          </p>
-        </>
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li>
+              <span class="post-meta">
+                {formatDate(post.data.date)}
+                {post.data.draft && <span class="draft-badge"> • Draft</span>}
+              </span>
+              <h3>
+                <a class="post-link" href={`/posts/${post.id}/`}>
+                  {post.data.title}
+                </a>
+              </h3>
+              {post.data.description ? (
+                <p>{post.data.description}</p>
+              ) : (
+                <Fragment set:html={getExcerpt(post.rendered?.html)} />
+              )}
+            </li>
+          ))}
+        </ul>
       )
     }
   </div>

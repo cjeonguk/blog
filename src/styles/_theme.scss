@@ -1,14 +1,19 @@
 // Light values are minima 2.5.1's colors with lighten()/darken() precomputed.
-// Dark values apply automatically from the OS setting.
+// Dark values come from the "dark" skin on minima's master branch
+// (_sass/minima/skins/auto.scss), also precomputed.
+// Dark applies automatically from the OS setting.
 
 :root {
   color-scheme: light dark;
 
   --text-color:       #111;
+  --heading-color:    #111;
   --background-color: #fdfdfd;
   --brand-color:      #2a7ae2;
   --brand-color-visited: #1756a9;
+  --link-hover-color: #111;
 
+  --site-title-color: #424242;
   --grey-color:       #828282;
   --grey-color-light: #e8e8e8;
   --grey-color-dark:  #424242;
@@ -20,25 +25,30 @@
   --table-header-bg:       #f0f0f0;
   --table-header-border:   #dedede;
   --table-header-border-bottom: #c9c9c9;
+  --table-border-color:    #e8e8e8;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color:       #e0e0e0;
+    --text-color:       #959595;
+    --heading-color:    #bbbbbb;
     --background-color: #181818;
-    --brand-color:      #79b8ff;
-    --brand-color-visited: #a5c8f5;
+    --brand-color:      #5691cd;
+    --brand-color-visited: #80bbff;
+    --link-hover-color: #959595;
 
-    --grey-color:       #9a9a9a;
-    --grey-color-light: #333;
-    --grey-color-dark:  #c6c6c6;
+    --site-title-color: #a6a6a6;
+    --grey-color:       #858585;
+    --grey-color-light: #2b2b2b;
+    --grey-color-dark:  #999999;
 
-    --code-background:  #22222c;
+    --code-background:  #222222;
 
-    --table-text-color:      #d0d0d0;
-    --table-zebra-color:     #1f1f1f;
-    --table-header-bg:       #262626;
-    --table-header-border:   #3a3a3a;
-    --table-header-border-bottom: #4a4a4a;
+    --table-text-color:      #959595;
+    --table-zebra-color:     #222222;
+    --table-header-bg:       #323232;
+    --table-header-border:   #3e3e3e;
+    --table-header-border-bottom: #3e3e3e;
+    --table-border-color:    #2b2b2b;
   }
 }
