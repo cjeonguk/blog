@@ -101,6 +101,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     gap: 15px;
   }
 
+  /* Pagefind appends screen-reader live regions after the footer. Pin them
+     so they don't make the page 1px taller than the viewport. */
+  [data-pagefind-announcer] {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
   .search-results {
     margin-top: 15px;
   }
