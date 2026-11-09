@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPosts, getExcerpt, formatDate } from "../lib/posts";
+
+const posts = await getPosts();
+---
+
+<BaseLayout>
+  <div class="home">
+    {
+      posts.length > 0 && (
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li>
+              <span class="post-meta">
+                {formatDate(post.data.date)}
+                {post.data.draft && <span class="draft-badge"> • Draft</span>}
+              </span>
+              <h3>
+                <a class="post-link" href={`/posts/${post.id}/`}>
+                  {post.data.title}
+                </a>
+              </h3>
+              {post.data.description ? (
+                <p>{post.data.description}</p>
+              ) : (
+                <Fragment set:html={getExcerpt(post.rendered?.html)} />
+              )}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</BaseLayout>

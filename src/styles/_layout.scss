@@ -1,0 +1,298 @@
+@use "sass:math";
+@use "settings" as *;
+
+/**
+ * Site header
+ */
+.site-header {
+  border-top: 5px solid var(--grey-color-dark);
+  border-bottom: 1px solid var(--grey-color-light);
+  min-height: $spacing-unit * 1.865;
+
+  // Positioning context for the mobile navigation icon
+  position: relative;
+}
+
+.site-title {
+  @include relative-font-size(1.625);
+  font-weight: 300;
+  line-height: $base-line-height * $base-font-size * 2.25;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  float: left;
+
+  &,
+  &:visited {
+    color: var(--site-title-color);
+  }
+}
+
+.site-nav {
+  float: right;
+  line-height: $base-line-height * $base-font-size * 2.25;
+
+  .nav-trigger {
+    display: none;
+  }
+
+  .menu-icon {
+    display: none;
+  }
+
+  .page-link {
+    color: var(--text-color);
+    line-height: $base-line-height;
+
+    // Gaps between nav items, but not on the last one
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+
+  // Mobile: the menu button opens a full-screen overlay below the header.
+  // The checkbox drives it, so it works without JavaScript.
+  @include media-query($on-palm) {
+    line-height: normal;
+
+    // Hidden visually but still focusable, so the menu works from the keyboard.
+    .nav-trigger {
+      display: block;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    label[for="nav-trigger"] {
+      display: block;
+      width: 36px;
+      height: 36px;
+      // Center in the header and line the icon up with the content edge.
+      margin-top: math.div($spacing-unit * 1.865 - 36px, 2);
+      margin-right: -9px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .nav-trigger:focus-visible ~ label[for="nav-trigger"] {
+      outline: 2px solid var(--brand-color);
+    }
+
+    .menu-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      > svg {
+        fill: var(--grey-color-dark);
+      }
+
+      .icon-close {
+        display: none;
+        stroke: var(--grey-color-dark);
+      }
+    }
+
+    .nav-trigger:checked ~ label .icon-open {
+      display: none;
+    }
+
+    .nav-trigger:checked ~ label .icon-close {
+      display: block;
+    }
+
+    .trigger {
+      display: none;
+      position: absolute;
+      top: calc(100% + 1px); // below the header's bottom border
+      left: 0;
+      right: 0;
+      height: 100vh;
+      z-index: 10;
+      padding: math.div($spacing-unit, 3) math.div($spacing-unit, 2);
+      background-color: var(--background-color);
+    }
+
+    .nav-trigger:checked ~ .trigger {
+      display: block;
+    }
+
+    .page-link {
+      display: block;
+      padding: 10px 0;
+      @include relative-font-size(1.25);
+
+      &:not(:last-child) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+// Keep the page from scrolling behind the open mobile menu.
+@include media-query($on-palm) {
+  body:has(.nav-trigger:checked) {
+    overflow: hidden;
+  }
+}
+
+
+
+/**
+ * Site footer
+ */
+.site-footer {
+  border-top: 1px solid var(--grey-color-light);
+  padding: $spacing-unit 0;
+}
+
+.footer-heading {
+  @include relative-font-size(1.125);
+  margin-bottom: math.div($spacing-unit, 2);
+}
+
+.contact-list,
+.social-media-list {
+  list-style: none;
+  margin-left: 0;
+}
+
+.footer-col-wrapper {
+  @include relative-font-size(0.9375);
+  color: var(--grey-color);
+  margin-left: math.div(-$spacing-unit, 2);
+
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+.footer-col {
+  float: left;
+  margin-bottom: math.div($spacing-unit, 2);
+  padding-left: math.div($spacing-unit, 2);
+}
+
+.footer-col-1 {
+  width: calc(35% - (#{$spacing-unit} / 2));
+}
+
+.footer-col-2 {
+  width: calc(20% - (#{$spacing-unit} / 2));
+}
+
+.footer-col-3 {
+  width: calc(45% - (#{$spacing-unit} / 2));
+}
+
+@include media-query($on-laptop) {
+  .footer-col-1,
+  .footer-col-2 {
+    width: calc(50% - (#{$spacing-unit} / 2));
+  }
+
+  .footer-col-3 {
+    width: calc(100% - (#{$spacing-unit} / 2));
+  }
+}
+
+@include media-query($on-palm) {
+  .footer-col {
+    float: none;
+    width: calc(100% - (#{$spacing-unit} / 2));
+  }
+}
+
+
+
+/**
+ * Page content
+ */
+.page-content {
+  padding: $spacing-unit 0;
+  flex: 1;
+}
+
+.page-heading {
+  @include relative-font-size(2);
+}
+
+.post-list-heading {
+  @include relative-font-size(1.75);
+}
+
+.post-list {
+  margin-left: 0;
+  list-style: none;
+
+  > li {
+    margin-bottom: $spacing-unit;
+  }
+}
+
+.post-meta {
+  font-size: $small-font-size;
+  color: var(--grey-color);
+}
+
+.post-link {
+  display: block;
+  @include relative-font-size(1.5);
+}
+
+
+
+/**
+ * Posts
+ */
+.post-header {
+  margin-bottom: $spacing-unit;
+}
+
+.post-title {
+  @include relative-font-size(2.625);
+  letter-spacing: -1px;
+  line-height: 1;
+
+  @include media-query($on-laptop) {
+    @include relative-font-size(2.25);
+  }
+}
+
+.post-content {
+  margin-bottom: $spacing-unit;
+
+  h2 {
+    @include relative-font-size(2);
+
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.75);
+    }
+  }
+
+  h3 {
+    @include relative-font-size(1.625);
+
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.375);
+    }
+  }
+
+  h4 {
+    @include relative-font-size(1.25);
+
+    @include media-query($on-laptop) {
+      @include relative-font-size(1.125);
+    }
+  }
+}
+
+.draft-badge {
+  color: #c0392b;
+  font-weight: 600;
+}

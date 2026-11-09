@@ -1,0 +1,52 @@
+---
+import { SITE } from "../config";
+
+const icon = (name: string) => `/assets/minima-social-icons.svg#${name}`;
+---
+
+<footer class="site-footer h-card">
+  <data class="u-url" value="/"></data>
+
+  <div class="wrapper">
+    <h2 class="footer-heading">{SITE.title}</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{SITE.author.name}</li>
+          {
+            SITE.author.email && (
+              <li>
+                <a class="u-email" href={`mailto:${SITE.author.email}`}>{SITE.author.email}</a>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          {
+            SITE.social.github && (
+              <li>
+                <a href={`https://github.com/${SITE.social.github}`}>
+                  <svg class="svg-icon"><use href={icon("github")}></use></svg>{" "}
+                  <span class="username">{SITE.social.github}</span>
+                </a>
+              </li>
+            )
+          }
+          <li>
+            <a href="/rss.xml">
+              <svg class="svg-icon"><use href={icon("rss")}></use></svg> <span>rss</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>{SITE.description}</p>
+      </div>
+    </div>
+  </div>
+</footer>
