@@ -1,0 +1,35 @@
+version: 2
+
+updates:
+  # npm 생태계 설정으로 pnpm-lock.yaml도 함께 갱신된다.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Asia/Seoul
+    open-pull-requests-limit: 5
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    commit-message:
+      prefix: deps
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Asia/Seoul
+    groups:
+      actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: ci
