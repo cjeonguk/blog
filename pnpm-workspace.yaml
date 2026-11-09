@@ -1,0 +1,4 @@
+# @parcel/watcher (via sass) only builds from source when asked to;
+# prebuilt binaries come from its optional dependencies.
+allowBuilds:
+  "@parcel/watcher": false
