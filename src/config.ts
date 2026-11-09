@@ -1,11 +1,30 @@
 type NavLink = { title: string; href: string; newTab?: boolean };
 
+// Accounts shown in the footer, in this order. Leave one out to hide it.
+export type Social = {
+  dribbble?: string;
+  facebook?: string;
+  flickr?: string;
+  github?: string;
+  instagram?: string;
+  linkedin?: string;
+  mastodon?: { username: string; instance: string };
+  pinterest?: string;
+  stackoverflow?: string; // the part after /users/, e.g. "123456/name"
+  twitter?: string;
+  youtube?: string;
+};
+
 export const SITE: {
   title: string;
   description: string;
   lang: string;
   author: { name: string; email?: string };
-  social: { github?: string };
+  social: Social;
+  /** Default link preview image, a path under public/ (e.g. "/media/og.png"). */
+  image?: string;
+  /** Site logo for search engines, a path under public/. */
+  logo?: string;
   nav: NavLink[];
 } = {
   title: "Jeonguk Choi’s Weblog",

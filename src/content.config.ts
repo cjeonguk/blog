@@ -10,12 +10,16 @@ const posts = defineCollection({
     pattern: "**/*.md",
     generateId: ({ entry }) => entry.replace(/(\/index)?\.md$/, ""),
   }),
-  schema: z.object({
-    title: z.string(),
-    date: z.coerce.date(),
-    description: z.string().optional(),
-    draft: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      date: z.coerce.date(),
+      updated: z.coerce.date().optional(),
+      description: z.string().optional(),
+      // Link preview image, relative to the post (e.g. ./cover.png).
+      image: image().optional(),
+      draft: z.boolean().default(false),
+    }),
 });
 
 export const collections = { posts };

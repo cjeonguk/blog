@@ -1,18 +1,29 @@
 ---
 import { SITE } from "../config";
+import { getSocialLinks } from "../lib/social";
 import "../styles/main.scss";
 
 interface Props {
   title?: string;
   description?: string;
-  article?: { published: Date };
+  /** Link preview image path. Falls back to SITE.image. */
+  image?: string;
+  article?: { published: Date; modified?: Date };
 }
 
-const { title, description = SITE.description, article } = Astro.props;
+const { title, description = SITE.description, image = SITE.image, article } = Astro.props;
 
 // Matches jekyll-seo-tag: "Site | Tagline" on the home page, "Page | Site" elsewhere.
 const fullTitle = title ? `${title} | ${SITE.title}` : `${SITE.title} | ${SITE.description}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = image && new URL(image, Astro.site).href;
+const twitter = SITE.social.twitter;
+
+const author = {
+  "@type": "Person",
+  name: SITE.author.name,
+  sameAs: getSocialLinks().map((link) => link.url),
+};
 
 const jsonLd = article
   ? {
@@ -21,16 +32,24 @@ const jsonLd = article
       headline: title,
       description,
       datePublished: article.published.toISOString(),
-      author: { "@type": "Person", name: SITE.author.name },
+      dateModified: (article.modified ?? article.published).toISOString(),
+      author,
+      image: imageUrl,
       url: canonical.href,
       mainEntityOfPage: { "@type": "WebPage", "@id": canonical.href },
+      publisher: SITE.logo && {
+        "@type": "Organization",
+        name: SITE.author.name,
+        logo: { "@type": "ImageObject", url: new URL(SITE.logo, Astro.site).href },
+      },
     }
   : {
       "@context": "https://schema.org",
       "@type": "WebSite",
       name: SITE.title,
       description: SITE.description,
-      author: { "@type": "Person", name: SITE.author.name },
+      author,
+      image: imageUrl,
       url: canonical.href,
     };
 ---
@@ -50,9 +69,13 @@ const jsonLd = article
   <meta property="og:site_name" content={SITE.title} />
   <meta property="og:locale" content="en_US" />
   <meta property="og:type" content={article ? "article" : "website"} />
+  {imageUrl && <meta property="og:image" content={imageUrl} />}
   {article && <meta property="article:published_time" content={article.published.toISOString()} />}
-  <meta name="twitter:card" content="summary" />
+  {article?.modified && <meta property="article:modified_time" content={article.modified.toISOString()} />}
+  <meta name="twitter:card" content={imageUrl ? "summary_large_image" : "summary"} />
   <meta property="twitter:title" content={title ?? SITE.title} />
+  {imageUrl && <meta property="twitter:image" content={imageUrl} />}
+  {twitter && <meta name="twitter:site" content={`@${twitter}`} />}
 
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 

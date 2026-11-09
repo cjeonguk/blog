@@ -20,10 +20,14 @@ Create `src/content/posts/<slug>/index.md`. It is published at `/posts/<slug>/`.
 ---
 title: "Post title"
 date: 2026-11-09
+updated: 2026-11-10 # Optional. Shown as "Updated" next to the date.
 description: "Optional. Used for meta tags and RSS."
+image: ./cover.png # Optional. Link preview image, next to the post.
 draft: true # Optional. Drafts appear only in `pnpm dev`.
 ---
 ```
+
+Posts without `image` use `SITE.image` from `src/config.ts`. A 1200×630 image fits most link previews.
 
 ### Media
 
@@ -32,7 +36,7 @@ draft: true # Optional. Drafts appear only in `pnpm dev`.
 
 ## Layout
 
-- `src/config.ts`: site title, author, nav links
+- `src/config.ts`: site title, author, social accounts (footer links), default preview image, logo, nav links
 - `src/content/posts/`: posts
 - `src/pages/`: pages (`about.md`, `search.astro`, RSS)
 - `src/styles/`: minima styles; colors and dark mode are in `_theme.scss`

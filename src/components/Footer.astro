@@ -1,5 +1,6 @@
 ---
 import { SITE } from "../config";
+import { getSocialLinks } from "../lib/social";
 
 const icon = (name: string) => `/assets/minima-social-icons.svg#${name}`;
 ---
@@ -27,14 +28,14 @@ const icon = (name: string) => `/assets/minima-social-icons.svg#${name}`;
       <div class="footer-col footer-col-2">
         <ul class="social-media-list">
           {
-            SITE.social.github && (
+            getSocialLinks().map((link) => (
               <li>
-                <a href={`https://github.com/${SITE.social.github}`}>
-                  <svg class="svg-icon"><use href={icon("github")}></use></svg>{" "}
-                  <span class="username">{SITE.social.github}</span>
+                <a href={link.url} rel="me">
+                  <svg class="svg-icon"><use href={icon(link.icon)}></use></svg>{" "}
+                  <span class="username">{link.label}</span>
                 </a>
               </li>
-            )
+            ))
           }
           <li>
             <a href="/rss.xml">
