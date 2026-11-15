@@ -20,6 +20,6 @@
   },
   "devDependencies": {
     "pagefind": "^1.6.0",
-    "sass": "^1.108.1"
+    "sass": "^1.108.2"
   }
 }
