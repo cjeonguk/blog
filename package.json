@@ -15,11 +15,11 @@
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.4.7"
+    "@astrojs/sitemap": "^3.7.6",
+    "astro": "^7.4.13"
   },
   "devDependencies": {
     "pagefind": "^1.6.0",
-    "sass": "^1.108.1"
+    "sass": "^1.108.2"
   }
 }
